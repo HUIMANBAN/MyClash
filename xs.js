@@ -63,7 +63,11 @@ function createProxyGroups(nodes) {
 
 	const serviceGroups = [
 		{name: "YouTube", type: "url-test", proxies: [...TW, ...SG, ...JP, ...US]},
-		{name: "Google", type: "url-test", proxies: [...JP, ...US, ...SG, ...Other]},
+		{
+			name: "Google",
+			type: "url-test",
+			proxies: [...SG, ...JP.filter(n => /软银/i.test(n)), ...US, ...Other, ...TW]
+		},
 		{name: "Gemini", type: "fallback", proxies: [...SG, ...JP.filter(n => /软银/i.test(n)), ...Other]},
 		{name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other]},
 		{name: "X", type: "fallback", proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...Other]},
@@ -71,7 +75,6 @@ function createProxyGroups(nodes) {
 		{name: "Telegram", type: "url-test", proxies: [...SG, ...JP, ...TW, ...US]},
 		{name: "BBC", type: "fallback", proxies: [...SG, ...JP, ...UK, ...Other]},
 		{name: "Github", type: "fallback", proxies: [...JP, ...SG, ...TW, ...HK, ...Other]},
-
 	];
 
 	const countryGroups = [
@@ -96,6 +99,9 @@ function createProxyGroups(nodes) {
 
 		if (group.type === "url-test") {
 			obj.tolerance = 20;
+		}
+		if (group.name === "Gemini") {
+			obj.url = "https://gemini.google.com";
 		}
 
 		return obj;
