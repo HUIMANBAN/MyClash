@@ -71,6 +71,7 @@ function createProxyGroups(nodes) {
 		{name: "Telegram", type: "url-test", proxies: [...SG, ...JP, ...TW, ...US]},
 		{name: "BBC", type: "fallback", proxies: [...SG, ...JP, ...UK, ...Other]},
 		{name: "Github", type: "fallback", proxies: [...JP, ...SG, ...TW, ...HK, ...Other]},
+
 	];
 
 	const countryGroups = [
