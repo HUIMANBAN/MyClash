@@ -97,17 +97,17 @@ function createProxyGroups(nodes) {
         {
             name: "TikTok",
             type: "fallback",
-            proxies: [...US, ...TW, ...JP, ...SG, ...HK],
+            proxies: [...US, ...TW, ...JP, ...SG],
         },
         {
             name: "Telegram",
             type: "url-test",
-            proxies: [...SG, ...JP, ...TW, ...US, ...HK],
+            proxies: [...SG, ...JP, ...TW, ...US],
         },
         {
             name: "BBC",
             type: "fallback",
-            proxies: [...HK, ...SG, ...JP, ...UK, ...Other],
+            proxies: [ ...SG, ...JP, ...UK, ...Other],
         },
         {
             name: "Github",
