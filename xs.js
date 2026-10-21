@@ -100,7 +100,7 @@ function createProxyGroups(nodes) {
 		if (group.type === "url-test") {
 			obj.tolerance = 20;
 		}
-		if (group.name === ("Gemini" || "Google")) {
+		if (group.name in ["Gemini", "Google"]) {
 			obj.url = "https://gemini.google.com";
 		}
 
