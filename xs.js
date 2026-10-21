@@ -63,12 +63,6 @@ function createProxyGroups(nodes) {
 
 	const serviceGroups = [
 		{name: "YouTube", type: "url-test", proxies: [...TW, ...SG, ...JP, ...US]},
-		{
-			name: "Google",
-			type: "url-test",
-			proxies: [...SG, ...JP.filter(n => /软银/i.test(n)), ...US, ...Other, ...TW]
-		},
-		{name: "Gemini", type: "fallback", proxies: [...SG, ...JP.filter(n => /软银/i.test(n)), ...Other]},
 		{name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other]},
 		{name: "X", type: "fallback", proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...Other]},
 		{name: "TikTok", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...Other]},
@@ -99,9 +93,6 @@ function createProxyGroups(nodes) {
 
 		if (group.type === "url-test") {
 			obj.tolerance = 20;
-		}
-		if (group.name in ["Gemini", "Google"]) {
-			obj.url = "https://gemini.google.com";
 		}
 
 		return obj;
@@ -139,16 +130,16 @@ function getRules() {
 		"DOMAIN-KEYWORD,openai,ChatGPT",
 		"DOMAIN-SUFFIX,oaistatic.com,ChatGPT",
 		"DOMAIN-SUFFIX,oaiusercontent.com,ChatGPT",
-		"DOMAIN-SUFFIX,gemini.google.com,Gemini",
-		"DOMAIN-KEYWORD,gemini,Gemini",
+		"DOMAIN-SUFFIX,gemini.google.com,Default",
+		"DOMAIN-KEYWORD,gemini,Default",
 
 		// Google
-		"DOMAIN-SUFFIX,gstatic.com,Google",
-		"DOMAIN-KEYWORD,google,Google",
+		"DOMAIN-SUFFIX,gstatic.com,Default",
+		"DOMAIN-KEYWORD,google,Default",
 
 		// 海外服务
 		"DOMAIN-KEYWORD,tiktok,TikTok",
-		"DOMAIN-SUFFIX,chinadigitaltimes.net,Google",
+		"DOMAIN-SUFFIX,chinadigitaltimes.net,Default",
 		"DOMAIN-KEYWORD,github,Github",
 		"DOMAIN-SUFFIX,bbc.com,BBC",
 		"DOMAIN-SUFFIX,bbc.co.uk,BBC",
