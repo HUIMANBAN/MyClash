@@ -74,7 +74,7 @@ function createProxyGroups(nodes) {
         {
             name: "YouTube",
             type: "url-test",
-            proxies: [...TW, ...SG, ...JP, ...HK, ...US],
+            proxies: [...TW, ...SG, ...JP, ...US],
         },
         {
             name: "Google",
