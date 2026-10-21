@@ -1,4 +1,3 @@
-
 // noinspection SpellCheckingInspection
 
 const countryRegex = {
@@ -100,7 +99,7 @@ function createProxyGroups(nodes) {
         {
             name: "YouTube",
             type: "url-test",
-            proxies: [...TW, ...SG, ...JP, ...HK],
+            proxies: [...TW, ...SG, ...JP, ...HK, ...US],
         },
         {
             name: "Google",
