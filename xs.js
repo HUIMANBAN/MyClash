@@ -16,7 +16,7 @@ const testURL = "https://www.gstatic.com/generate_204";
 const main = function (config) {
 	// 删除不需要的节点
 	config.proxies = config.proxies.filter(
-		({name}) => !/试验|更新|套餐|剩余/i.test(name)
+		({name}) => !/试验|更新|套餐|剩余|超时/i.test(name)
 	);
 
 	// 节点分类
@@ -103,7 +103,7 @@ function createProxyGroups(nodes) {
 	const allGroups = [autoGroup, ...serviceGroups, ...countryGroups];
 
 	const validGroups = allGroups
-		.filter((group) => group.proxies.length > 0)
+		.filter(group => group.proxies.length > 0)
 		.map(withTest);
 
 	const validGroupNames = new Set(validGroups.map((group) => group.name));
