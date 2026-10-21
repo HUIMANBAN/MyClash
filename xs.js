@@ -114,7 +114,7 @@ function createProxyGroups(nodes) {
         {
             name: "Github",
             type: "fallback",
-            proxies: [...SG, ...JP, ...TW, ...HK,],
+            proxies: [ ...JP,...SG, ...TW, ...HK,],
         },
     ];
 
