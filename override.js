@@ -100,11 +100,6 @@ function createProxyGroups(nodes) {
         proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...Other, ...UK],
     };
 
-    // 没有节点时明确拒绝代理流量，避免空组或意外直连
-    if (autoGroup.proxies.length === 0) {
-        autoGroup.proxies = ["REJECT"];
-    }
-
     // -----------------------------------------------------
     // 服务策略组
     // -----------------------------------------------------
@@ -151,14 +146,6 @@ function createProxyGroups(nodes) {
             proxies: [...HK, ...SG, ...JP, ...UK, ...Other],
         },
     ];
-
-    // 保留服务组名称，确保分流规则始终有效
-    // 首选地区没有节点时，交给 Auto 使用其他地区节点
-    for (const group of serviceGroups) {
-        if (group.proxies.length === 0) {
-            group.proxies = ["Auto"];
-        }
-    }
 
     // -----------------------------------------------------
     // 国家 / 地区策略组
