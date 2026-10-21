@@ -82,7 +82,7 @@ function createProxyGroups(nodes) {
         {
             name: "Gemini",
             type: "fallback",
-            proxies: [...HK, ...TW, ...JP, ...US, ...SG],
+            proxies: [...SG, ...US, ...HK, ...TW, ...JP,],
         },
         {
             name: "ChatGPT",
@@ -107,7 +107,7 @@ function createProxyGroups(nodes) {
         {
             name: "BBC",
             type: "fallback",
-            proxies: [...HK, ...SG, ...JP, ...UK, ...Other],
+            proxies: [...HK, ...JP, ...SG, ...UK, ...Other],
         },
     ];
 
