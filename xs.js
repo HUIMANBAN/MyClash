@@ -62,25 +62,25 @@ function createProxyGroups(nodes) {
 	};
 
 	const serviceGroups = [
-		{name: "YouTube", type: "url-test", proxies: [...TW, ...SG, ...JP, ...US],},
-		{name: "Google", type: "url-test", proxies: [...US, ...TW, ...SG, ...JP],},
-		{name: "Gemini", type: "fallback", proxies: [...HK, ...TW, ...JP, ...US, ...SG, ...Other],},
-		{name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other],},
-		{name: "X", type: "fallback", proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...Other],},
-		{name: "TikTok", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...Other],},
-		{name: "Telegram", type: "url-test", proxies: [...SG, ...JP, ...TW, ...US],},
-		{name: "BBC", type: "fallback", proxies: [...SG, ...JP, ...UK, ...Other],},
-		{name: "Github", type: "fallback", proxies: [...JP, ...SG, ...TW, ...HK, ...Other],},
+		{name: "YouTube", type: "url-test", proxies: [...TW, ...SG, ...JP, ...US]},
+		{name: "Google", type: "url-test", proxies: [...US, ...TW, ...SG, ...JP]},
+		{name: "Gemini", type: "fallback", proxies: [...TW, ...JP, ...HK, ...SG, ...US, ...Other]},
+		{name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other]},
+		{name: "X", type: "fallback", proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...Other]},
+		{name: "TikTok", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...Other]},
+		{name: "Telegram", type: "url-test", proxies: [...SG, ...JP, ...TW, ...US]},
+		{name: "BBC", type: "fallback", proxies: [...SG, ...JP, ...UK, ...Other]},
+		{name: "Github", type: "fallback", proxies: [...JP, ...SG, ...TW, ...HK, ...Other]},
 	];
 
 	const countryGroups = [
-		{name: "US Group", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...HK],},
-		{name: "JP Group", type: "fallback", proxies: [...JP, ...SG, ...TW, ...US, ...HK],},
-		{name: "SG Group", type: "fallback", proxies: [...SG, ...JP, ...TW, ...US, ...HK],},
-		{name: "TW Group", type: "fallback", proxies: [...TW, ...JP, ...SG, ...US, ...HK],},
-		{name: "HK Group", type: "fallback", proxies: [...HK, ...TW, ...JP, ...SG, ...US],},
-		{name: "KR Group", type: "fallback", proxies: [...KR, ...TW, ...JP, ...SG, ...US],},
-		{name: "Other Group", type: "url-test", proxies: Other,},
+		{name: "US Group", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...HK]},
+		{name: "JP Group", type: "fallback", proxies: [...JP, ...SG, ...TW, ...US, ...HK]},
+		{name: "SG Group", type: "fallback", proxies: [...SG, ...JP, ...TW, ...US, ...HK]},
+		{name: "TW Group", type: "fallback", proxies: [...TW, ...JP, ...SG, ...US, ...HK]},
+		{name: "HK Group", type: "fallback", proxies: [...HK, ...TW, ...JP, ...SG, ...US]},
+		{name: "KR Group", type: "fallback", proxies: [...KR, ...TW, ...JP, ...SG, ...US]},
+		{name: "Other Group", type: "url-test", proxies: Other},
 	];
 
 	const withTest = (group) => {
