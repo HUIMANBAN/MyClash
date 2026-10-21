@@ -10,19 +10,7 @@ const countryRegex = {
 };
 
 const countries = ["HK", "TW", "JP", "SG", "US", "UK", "Other"];
-
-const testURLs = {
-    Google: "https://www.gstatic.com/generate_204",
-    Cloudflare: "https://cp.cloudflare.com/generate_204",
-};
-
-const testURL = testURLs.Google;
-
-/*
- * =====================================================
- * 主函数
- * =====================================================
- */
+const testURL = "https://www.gstatic.com/generate_204";
 
 const main = function (config) {
     // 删除不需要的节点
@@ -34,12 +22,16 @@ const main = function (config) {
     const countryNodes = Object.fromEntries(
         countries.map((country) => [country, []])
     );
-    const countryPatterns = Object.entries(countryRegex);
 
     for (const {name} of config.proxies) {
-        const country =
-            countryPatterns.find(([, regex]) => regex.test(name))?.[0] ??
-            "Other";
+        let country = "Other";
+
+        for (const code of Object.keys(countryRegex)) {
+            if (countryRegex[code].test(name)) {
+                country = code;
+                break;
+            }
+        }
 
         countryNodes[country].push(name);
     }
@@ -53,18 +45,8 @@ const main = function (config) {
     return config;
 };
 
-/*
- * =====================================================
- * Proxy Groups
- * =====================================================
- */
-
 function createProxyGroups(nodes) {
     const {HK, TW, JP, SG, US, UK, Other} = nodes;
-
-    // -----------------------------------------------------
-    // 默认选择组
-    // -----------------------------------------------------
 
     const defaultGroup = {
         name: "Default",
@@ -80,20 +62,11 @@ function createProxyGroups(nodes) {
         ],
     };
 
-    // -----------------------------------------------------
-    // 总自动选择组
-    // fallback：按顺序选择可用节点
-    // -----------------------------------------------------
-
     const autoGroup = {
         name: "Auto",
         type: "fallback",
         proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...Other],
     };
-
-    // -----------------------------------------------------
-    // 服务策略组
-    // -----------------------------------------------------
 
     const serviceGroups = [
         {
@@ -138,11 +111,6 @@ function createProxyGroups(nodes) {
         },
     ];
 
-    // -----------------------------------------------------
-    // 国家 / 地区策略组
-    // 优先使用本地区节点，后续地区作为备用
-    // -----------------------------------------------------
-
     const countryGroups = [
         {
             name: "US Group",
@@ -176,10 +144,6 @@ function createProxyGroups(nodes) {
         },
     ];
 
-    // -----------------------------------------------------
-    // 统一测速配置
-    // -----------------------------------------------------
-
     const withTest = (group) => {
         const obj = {
             ...group,
@@ -196,11 +160,6 @@ function createProxyGroups(nodes) {
 
         return obj;
     };
-
-    // -----------------------------------------------------
-    // 只生成有可用节点的组，避免空代理组
-    // 同时过滤不存在的策略组引用
-    // -----------------------------------------------------
 
     const allGroups = [autoGroup, ...serviceGroups, ...countryGroups];
 
@@ -219,12 +178,6 @@ function createProxyGroups(nodes) {
 
     return [validDefaultGroup, ...validGroups];
 }
-
-/*
- * =====================================================
- * Rules
- * =====================================================
- */
 
 function getRules() {
     return [
