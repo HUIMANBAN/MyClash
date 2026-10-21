@@ -1,3 +1,5 @@
+// noinspection SpellCheckingInspection
+
 /*
  * =====================================================
  * 基础配置
@@ -8,13 +10,15 @@ const countryRegex = {
     HK: /🇭🇰|香港/i,
     TW: /🇹🇼|台湾/i,
     JP: /🇯🇵|日本/i,
-    KR: /🇰🇷|韩国/i,
     SG: /🇸🇬|新加坡/i,
     US: /🇺🇸|美国/i,
     UK: /🇬🇧|英国/i,
 };
 
-const countries = ["HK", "TW", "JP", "KR", "SG", "US", "UK", "Other"];
+const countries = [...Object.keys(countryRegex), "Other"];
+const countryPatterns = Object.entries(countryRegex);
+
+const excludedNodeRegex = /试验|更新|套餐|剩余|/i;
 
 const testURLs = {
     Google: "https://www.gstatic.com/generate_204",
@@ -30,16 +34,15 @@ const testURL = testURLs.Google;
  */
 
 const main = function (config) {
-    // 删除不需要的节点
-    config.proxies = config.proxies.filter(
-        ({name}) => !/试验|更新/i.test(name)
+    // 删除不需要的节点；没有内联节点时按空列表处理
+    config.proxies = (config.proxies ?? []).filter(
+        ({name}) => !excludedNodeRegex.test(name)
     );
 
     // 节点分类
     const countryNodes = Object.fromEntries(
         countries.map((country) => [country, []])
     );
-    const countryPatterns = Object.entries(countryRegex);
 
     for (const {name} of config.proxies) {
         const country =
@@ -65,7 +68,7 @@ const main = function (config) {
  */
 
 function createProxyGroups(nodes) {
-    const {HK, TW, JP, KR, SG, US, UK, Other} = nodes;
+    const {HK, TW, JP, SG, US, UK, Other} = nodes;
 
     // -----------------------------------------------------
     // 默认选择组
@@ -81,7 +84,7 @@ function createProxyGroups(nodes) {
             "JP Group",
             "SG Group",
             "US Group",
-            "KR Group",
+            "UK Group",
             "Other Group",
         ],
     };
@@ -94,8 +97,13 @@ function createProxyGroups(nodes) {
     const autoGroup = {
         name: "Auto",
         type: "fallback",
-        proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...KR, ...Other],
+        proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...Other, ...UK],
     };
+
+    // 没有节点时明确拒绝代理流量，避免空组或意外直连
+    if (autoGroup.proxies.length === 0) {
+        autoGroup.proxies = ["REJECT"];
+    }
 
     // -----------------------------------------------------
     // 服务策略组
@@ -110,12 +118,12 @@ function createProxyGroups(nodes) {
         {
             name: "Google",
             type: "url-test",
-            proxies: [...US, ...TW, ...SG, ...JP, ...KR, ...HK],
+            proxies: [...US, ...TW, ...SG, ...JP, ...HK],
         },
         {
             name: "Gemini",
             type: "fallback",
-            proxies: [...HK, ...TW, ...JP, ...US, ...KR, ...SG],
+            proxies: [...HK, ...TW, ...JP, ...US, ...SG],
         },
         {
             name: "ChatGPT",
@@ -140,9 +148,17 @@ function createProxyGroups(nodes) {
         {
             name: "BBC",
             type: "fallback",
-            proxies: [...HK, ...SG, ...JP, ...UK, ...KR, ...Other],
+            proxies: [...HK, ...SG, ...JP, ...UK, ...Other],
         },
     ];
+
+    // 保留服务组名称，确保分流规则始终有效
+    // 首选地区没有节点时，交给 Auto 使用其他地区节点
+    for (const group of serviceGroups) {
+        if (group.proxies.length === 0) {
+            group.proxies = ["Auto"];
+        }
+    }
 
     // -----------------------------------------------------
     // 国家 / 地区策略组
@@ -176,9 +192,9 @@ function createProxyGroups(nodes) {
             proxies: [...HK, ...TW, ...JP, ...SG, ...US],
         },
         {
-            name: "KR Group",
+            name: "UK Group",
             type: "fallback",
-            proxies: [...KR, ...HK, ...TW, ...JP, ...SG, ...US],
+            proxies: [...UK, ...US, ...TW, ...JP, ...SG, ...HK],
         },
         {
             name: "Other Group",
@@ -209,8 +225,8 @@ function createProxyGroups(nodes) {
     };
 
     // -----------------------------------------------------
-    // 只生成有可用节点的组，避免空代理组
-    // 同时过滤不存在的策略组引用
+    // 省略空的地区组，并过滤 Default 中不存在的组引用
+    // Auto 和服务组已有兜底，始终保留
     // -----------------------------------------------------
 
     const allGroups = [autoGroup, ...serviceGroups, ...countryGroups];
@@ -246,7 +262,7 @@ function getRules() {
         "DOMAIN-KEYWORD,youtube,YouTube",
         "DOMAIN-SUFFIX,immersivetranslate.com,YouTube",
 
-        // AI：具体服务在 Google 的通用规则之前。
+        // AI
         "DOMAIN-KEYWORD,chatgpt,ChatGPT",
         "DOMAIN-KEYWORD,openai,ChatGPT",
         "DOMAIN-SUFFIX,oaistatic.com,ChatGPT",
@@ -258,7 +274,7 @@ function getRules() {
         "DOMAIN-SUFFIX,gstatic.com,Google",
         "DOMAIN-KEYWORD,google,Google",
 
-        // 海外服务：BBC 绑定已有的 BBC 服务组，不依赖台湾节点。
+        // 海外服务
         "DOMAIN-KEYWORD,tiktok,TikTok",
         "DOMAIN-SUFFIX,chinadigitaltimes.net,Google",
         "DOMAIN-KEYWORD,github,Google",
@@ -280,12 +296,12 @@ function getRules() {
         "IP-CIDR6,2001:b28:f23d::/48,Telegram,no-resolve",
         "IP-CIDR6,2001:b28:f23f::/48,Telegram,no-resolve",
 
-        // Adobe：沿用 1.js 的拦截设置。
+        // Adobe
         "DOMAIN-SUFFIX,adobe.com,REJECT",
         "DOMAIN-SUFFIX,adobe.io,REJECT",
         "DOMAIN-SUFFIX,adobestats.io,REJECT",
 
-        // 国内直连：沿用原有策略。
+        // 国内直连
         "DOMAIN-SUFFIX,acfun.tv,DIRECT",
         "DOMAIN-SUFFIX,aliapp.org,DIRECT",
         "DOMAIN-KEYWORD,alicdn,DIRECT",
@@ -330,7 +346,7 @@ function getRules() {
         "DOMAIN-SUFFIX,local,DIRECT",
         "GEOIP,LAN,DIRECT,no-resolve",
 
-        // 中国流量（使用客户端提供的 GeoSite / GeoIP 数据）。
+        // 中国流量
         "DOMAIN-SUFFIX,cn,DIRECT",
         "GEOSITE,CN,DIRECT",
         "GEOIP,CN,DIRECT,no-resolve",
