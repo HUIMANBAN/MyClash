@@ -87,7 +87,7 @@ function createProxyGroups(nodes) {
         {
             name: "ChatGPT",
             type: "fallback",
-            proxies: [...TW, ...SG, ...JP, ...US],
+            proxies: [...SG, ...JP, ...US, ...TW,],
         },
         {
             name: "X",
