@@ -1,15 +1,16 @@
 // noinspection SpellCheckingInspection
 
 const countryRegex = {
-    HK: /🇭🇰|香港/i,
     TW: /🇹🇼|台湾/i,
     JP: /🇯🇵|日本/i,
     SG: /🇸🇬|新加坡/i,
     US: /🇺🇸|美国/i,
     UK: /🇬🇧|英国/i,
+    KR: /🇰🇷|韩国/i,
+    HK: /🇭🇰|香港/i,
 };
 
-const countries = ["HK", "TW", "JP", "SG", "US", "UK", "Other"];
+const countries = ["TW", "JP", "SG", "US", "UK", "KR", "HK", "Other"];
 const testURL = "https://www.gstatic.com/generate_204";
 
 const main = function (config) {
@@ -46,7 +47,7 @@ const main = function (config) {
 };
 
 function createProxyGroups(nodes) {
-    const {HK, TW, JP, SG, US, UK, Other} = nodes;
+    const {TW, JP, SG, US, UK, KR, HK, Other} = nodes;
 
     const defaultGroup = {
         name: "Default",
@@ -58,6 +59,7 @@ function createProxyGroups(nodes) {
             "JP Group",
             "SG Group",
             "US Group",
+            "KR Group",
             "Other Group",
         ],
     };
@@ -65,7 +67,7 @@ function createProxyGroups(nodes) {
     const autoGroup = {
         name: "Auto",
         type: "fallback",
-        proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...Other],
+        proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...KR, ...Other],
     };
 
     const serviceGroups = [
@@ -87,7 +89,7 @@ function createProxyGroups(nodes) {
         {
             name: "ChatGPT",
             type: "fallback",
-            proxies: [...SG, ...JP, ...US, ...TW,],
+            proxies: [...SG, ...JP, ...US, ...Other],
         },
         {
             name: "X",
@@ -107,7 +109,7 @@ function createProxyGroups(nodes) {
         {
             name: "BBC",
             type: "fallback",
-            proxies: [ ...SG, ...JP, ...UK, ...Other],
+            proxies: [...SG, ...JP, ...UK, ...Other],
         },
         {
             name: "Github",
@@ -141,6 +143,11 @@ function createProxyGroups(nodes) {
             name: "HK Group",
             type: "fallback",
             proxies: [...HK, ...TW, ...JP, ...SG, ...US],
+        },
+        {
+            name: "KR Group",
+            type: "fallback",
+            proxies: [...KR, ...TW, ...JP, ...SG, ...US],
         },
         {
             name: "Other Group",
