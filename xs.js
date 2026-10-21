@@ -109,6 +109,11 @@ function createProxyGroups(nodes) {
             type: "fallback",
             proxies: [...HK, ...SG, ...JP, ...UK, ...Other],
         },
+        {
+            name: "Github",
+            type: "fallback",
+            proxies: [...HK, ...SG, ...JP, ...TW],
+        },
     ];
 
     const countryGroups = [
@@ -203,7 +208,7 @@ function getRules() {
         // 海外服务
         "DOMAIN-KEYWORD,tiktok,TikTok",
         "DOMAIN-SUFFIX,chinadigitaltimes.net,Google",
-        "DOMAIN-KEYWORD,github,Google",
+        "DOMAIN-KEYWORD,github,Github",
         "DOMAIN-SUFFIX,bbc.com,BBC",
         "DOMAIN-SUFFIX,bbc.co.uk,BBC",
         "DOMAIN-SUFFIX,x.com,X",
