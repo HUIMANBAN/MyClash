@@ -1,5 +1,3 @@
-// noinspection SpellCheckingInspection
-
 /*
  * =====================================================
  * 基础配置
@@ -15,10 +13,7 @@ const countryRegex = {
     UK: /🇬🇧|英国/i,
 };
 
-const countries = [...Object.keys(countryRegex), "Other"];
-const countryPatterns = Object.entries(countryRegex);
-
-const excludedNodeRegex = /试验|更新|套餐|剩余|/i;
+const countries = ["HK", "TW", "JP", "SG", "US", "UK", "Other"];
 
 const testURLs = {
     Google: "https://www.gstatic.com/generate_204",
@@ -34,15 +29,16 @@ const testURL = testURLs.Google;
  */
 
 const main = function (config) {
-    // 删除不需要的节点；没有内联节点时按空列表处理
-    config.proxies = (config.proxies ?? []).filter(
-        ({name}) => !excludedNodeRegex.test(name)
+    // 删除不需要的节点
+    config.proxies = config.proxies.filter(
+        ({name}) => !/试验|更新|套餐|剩余/i.test(name)
     );
 
     // 节点分类
     const countryNodes = Object.fromEntries(
         countries.map((country) => [country, []])
     );
+    const countryPatterns = Object.entries(countryRegex);
 
     for (const {name} of config.proxies) {
         const country =
@@ -84,7 +80,6 @@ function createProxyGroups(nodes) {
             "JP Group",
             "SG Group",
             "US Group",
-            "UK Group",
             "Other Group",
         ],
     };
@@ -97,7 +92,7 @@ function createProxyGroups(nodes) {
     const autoGroup = {
         name: "Auto",
         type: "fallback",
-        proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...Other, ...UK],
+        proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...Other],
     };
 
     // -----------------------------------------------------
@@ -179,11 +174,6 @@ function createProxyGroups(nodes) {
             proxies: [...HK, ...TW, ...JP, ...SG, ...US],
         },
         {
-            name: "UK Group",
-            type: "fallback",
-            proxies: [...UK, ...US, ...TW, ...JP, ...SG, ...HK],
-        },
-        {
             name: "Other Group",
             type: "url-test",
             proxies: Other,
@@ -212,8 +202,8 @@ function createProxyGroups(nodes) {
     };
 
     // -----------------------------------------------------
-    // 省略空的地区组，并过滤 Default 中不存在的组引用
-    // Auto 和服务组已有兜底，始终保留
+    // 只生成有可用节点的组，避免空代理组
+    // 同时过滤不存在的策略组引用
     // -----------------------------------------------------
 
     const allGroups = [autoGroup, ...serviceGroups, ...countryGroups];
