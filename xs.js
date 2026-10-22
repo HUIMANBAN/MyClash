@@ -61,7 +61,7 @@ function createProxyGroups(nodes) {
     };
 
     const serviceGroups = [
-        {name: "YouTube", type: "url-test", proxies: [...TW, ...SG, ...JP, ...US]},
+        {name: "YouTube", type: "url-test", proxies: [...SG, ...JP, ...US, ...HK, ...Other]},
         {name: "Google", type: "url-test", proxies: [...SG, ...Other, ...TW, ...KR, ...JP, ...HK]},
         {name: "Gemini", type: "url-test", proxies: [...SG, ...Other, ...JP.filter(n => /软银/i.test(n))]},
         {name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other]},
