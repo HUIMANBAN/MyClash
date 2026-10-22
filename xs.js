@@ -56,7 +56,7 @@ function createProxyGroups(nodes) {
 
     const autoGroup = {
         name: "Auto",
-        type: "fallback",
+        type: "url-test",
         proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...KR, ...Other],
     };
 
