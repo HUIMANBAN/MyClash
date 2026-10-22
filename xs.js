@@ -63,6 +63,7 @@ function createProxyGroups(nodes) {
 
     const serviceGroups = [
         {name: "YouTube", type: "url-test", proxies: [...TW, ...SG, ...JP, ...US]},
+        {name: "Gemini", type: "fallback", proxies: [...SG, ...Other]},
         {name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other]},
         {name: "X", type: "fallback", proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...Other]},
         {name: "TikTok", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...Other]},
@@ -130,8 +131,15 @@ function getRules() {
         "DOMAIN-KEYWORD,openai,ChatGPT",
         "DOMAIN-SUFFIX,oaistatic.com,ChatGPT",
         "DOMAIN-SUFFIX,oaiusercontent.com,ChatGPT",
-        "DOMAIN-SUFFIX,gemini.google.com,Default",
-        "DOMAIN-KEYWORD,gemini,Default",
+        "DOMAIN-SUFFIX,gemini.google.com,Gemini",
+        "DOMAIN-KEYWORD,gemini,Gemini",
+        "DOMAIN-SUFFIX,play.google.com,Gemini",
+        "DOMAIN-SUFFIX,gemini.gstatic.com,Gemini",
+        "DOMAIN-SUFFIX,googleusercontent.com,Gemini",
+        // "DOMAIN-SUFFIX,gstatic.com,Gemini",
+        "DOMAIN-SUFFIX,googletagmanager.com,Gemini",
+        "DOMAIN-SUFFIX,googleusercontent.com,Gemini",
+
 
         // Google
         "DOMAIN-SUFFIX,gstatic.com,Default",
