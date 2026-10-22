@@ -5,12 +5,11 @@ const countryRegex = {
     JP: /🇯🇵|日本/i,
     SG: /🇸🇬|新加坡/i,
     US: /🇺🇸|美国/i,
-    UK: /🇬🇧|英国/i,
     KR: /🇰🇷|韩国/i,
     HK: /🇭🇰|香港/i,
 };
 
-const countries = ["TW", "JP", "SG", "US", "UK", "KR", "HK", "Other"];
+const countries = ["TW", "JP", "SG", "US",  "KR", "HK", "Other"];
 const testURL = "https://www.gstatic.com/generate_204";
 
 const main = function (config) {
@@ -47,7 +46,7 @@ const main = function (config) {
 };
 
 function createProxyGroups(nodes) {
-    const {TW, JP, SG, US, UK, KR, HK, Other} = nodes;
+    const {TW, JP, SG, US,  KR, HK, Other} = nodes;
 
     const defaultGroup = {
         name: "Default",
@@ -64,12 +63,12 @@ function createProxyGroups(nodes) {
     const serviceGroups = [
         {name: "YouTube", type: "url-test", proxies: [...TW, ...SG, ...JP, ...US]},
         {name: "Google", type: "url-test", proxies: [...SG, ...Other, ...TW, ...KR, ...JP, ...HK]},
-        {name: "Gemini", type: "fallback", proxies: [...SG, ...Other, ...UK, ...JP.filter(n => /软银/i.test(n))]},
+        {name: "Gemini", type: "fallback", proxies: [...SG, ...Other,  ...JP.filter(n => /软银/i.test(n))]},
         {name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other]},
         {name: "X", type: "fallback", proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...Other]},
         {name: "TikTok", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...Other]},
         {name: "Telegram", type: "url-test", proxies: [...SG, ...JP, ...TW, ...US]},
-        {name: "BBC", type: "fallback", proxies: [...SG, ...JP, ...UK, ...Other]},
+        {name: "BBC", type: "fallback", proxies: [...SG, ...JP,  ...Other]},
         {name: "Github", type: "fallback", proxies: [...JP, ...SG, ...TW, ...HK, ...Other]},
     ];
 
