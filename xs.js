@@ -6,16 +6,15 @@ const countryRegex = {
     SG: /🇸🇬|新加坡/i,
     US: /🇺🇸|美国/i,
     KR: /🇰🇷|韩国/i,
-    HK: /🇭🇰|香港/i,
 };
 
-const countries = ["TW", "JP", "SG", "US", "KR", "HK", "Other"];
+const countries = ["TW", "JP", "SG", "US", "KR", "Other"];
 const testURL = "https://www.gstatic.com/generate_204";
 
 const main = function (config) {
     // 删除不需要的节点
     config.proxies = config.proxies.filter(
-        ({name}) => !/试验|更新|套餐|剩余|超时|澳门|泰国|英国/i.test(name)
+        ({name}) => !/试验|更新|套餐|剩余|超时|澳门|泰国|英国|香港/i.test(name)
     );
 
     // 节点分类
@@ -46,38 +45,37 @@ const main = function (config) {
 };
 
 function createProxyGroups(nodes) {
-    const {TW, JP, SG, US, KR, HK, Other} = nodes;
+    const {TW, JP, SG, US, KR, Other} = nodes;
 
     const defaultGroup = {
         name: "Default",
         type: "select",
-        proxies: ["Auto", "HK Group", "TW Group", "JP Group", "SG Group", "US Group", "KR Group", "Other Group",],
+        proxies: ["Auto", "TW Group", "JP Group", "SG Group", "US Group", "KR Group", "Other Group",],
     };
 
     const autoGroup = {
         name: "Auto",
         type: "url-test",
-        proxies: [...TW, ...JP, ...SG, ...US, ...HK, ...KR, ...Other],
+        proxies: [...TW, ...JP, ...SG, ...US, ...KR, ...Other],
     };
 
     const serviceGroups = [
-        {name: "YouTube", type: "url-test", proxies: [...SG, ...JP, ...US, ...HK, ...Other]},
-        {name: "Google", type: "url-test", proxies: [...SG, ...Other, ...TW, ...KR, ...JP, ...HK]},
+        {name: "YouTube", type: "url-test", proxies: [...SG, ...JP, ...US, ...Other]},
+        {name: "Google", type: "url-test", proxies: [...SG, ...Other, ...TW, ...KR, ...JP]},
         {name: "Gemini", type: "url-test", proxies: [...SG, ...Other, ...JP.filter(n => /软银/i.test(n))]},
         {name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other]},
-        {name: "X", type: "fallback", proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...Other]},
+        {name: "X", type: "fallback", proxies: [...US, ...JP, ...SG, ...TW, ...Other]},
         {name: "TikTok", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...Other]},
         {name: "Telegram", type: "url-test", proxies: [...SG, ...JP, ...TW, ...US]},
         {name: "BBC", type: "fallback", proxies: [...SG, ...JP, ...Other]},
-        {name: "Github", type: "fallback", proxies: [...JP, ...SG, ...TW, ...HK, ...Other]},
+        {name: "Github", type: "fallback", proxies: [...JP, ...SG, ...TW, ...Other]},
     ];
 
     const countryGroups = [
-        {name: "US Group", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...HK]},
-        {name: "JP Group", type: "fallback", proxies: [...JP, ...SG, ...TW, ...US, ...HK]},
-        {name: "SG Group", type: "fallback", proxies: [...SG, ...Other, ...JP, ...TW, ...US, ...HK]},
-        {name: "TW Group", type: "fallback", proxies: [...TW, ...JP, ...SG, ...US, ...HK]},
-        {name: "HK Group", type: "fallback", proxies: [...HK, ...TW, ...JP, ...SG, ...US]},
+        {name: "US Group", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG,]},
+        {name: "JP Group", type: "fallback", proxies: [...JP, ...SG, ...TW, ...US,]},
+        {name: "SG Group", type: "fallback", proxies: [...SG, ...Other, ...JP, ...TW, ...US,]},
+        {name: "TW Group", type: "fallback", proxies: [...TW, ...JP, ...SG, ...US,]},
         {name: "KR Group", type: "fallback", proxies: [...KR, ...TW, ...JP, ...SG, ...US]},
         {name: "Other Group", type: "url-test", proxies: Other},
     ];
