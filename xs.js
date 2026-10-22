@@ -15,7 +15,7 @@ const testURL = "https://www.gstatic.com/generate_204";
 const main = function (config) {
     // 删除不需要的节点
     config.proxies = config.proxies.filter(
-        ({name}) => !/试验|更新|套餐|剩余|超时|澳门/i.test(name)
+        ({name}) => !/试验|更新|套餐|剩余|超时|澳门|泰国|英国/i.test(name)
     );
 
     // 节点分类
@@ -63,7 +63,7 @@ function createProxyGroups(nodes) {
     const serviceGroups = [
         {name: "YouTube", type: "url-test", proxies: [...TW, ...SG, ...JP, ...US]},
         {name: "Google", type: "url-test", proxies: [...SG, ...Other, ...TW, ...KR, ...JP, ...HK]},
-        {name: "Gemini", type: "fallback", proxies: [...SG, ...Other, ...JP.filter(n => /软银/i.test(n))]},
+        {name: "Gemini", type: "url-test", proxies: [...SG, ...Other, ...JP.filter(n => /软银/i.test(n))]},
         {name: "ChatGPT", type: "fallback", proxies: [...SG, ...JP, ...US, ...Other]},
         {name: "X", type: "fallback", proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...Other]},
         {name: "TikTok", type: "fallback", proxies: [...US, ...TW, ...JP, ...SG, ...Other]},
