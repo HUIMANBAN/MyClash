@@ -137,6 +137,7 @@ function getRules() {
         "DOMAIN-KEYWORD,gemini,Gemini",
         // "DOMAIN-SUFFIX,play.google.com,Gemini",
         "DOMAIN-SUFFIX,gemini.gstatic.com,Gemini",
+        "DOMAIN-SUFFIX,googleapis.com,Gemini",
         // "DOMAIN-SUFFIX,googleusercontent.com,Gemini",
         // "DOMAIN-SUFFIX,googletagmanager.com,Gemini",
 
