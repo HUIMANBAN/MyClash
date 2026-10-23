@@ -88,22 +88,22 @@ function createProxyGroups(nodes) {
         {
             name: "YouTube",
             type: "url-test",
-            proxies: [...TW, ...SG, ...JP, ...HK, ...US],
+            proxies: [...TW, ...SG, ...JP, ...HK, ...US, ...gz_JP,],
         },
         {
             name: "Google",
             type: "url-test",
-            proxies: [...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
+            proxies: [...gz_JP, ...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
         },
         {
             name: "Gemini",
             type: "fallback",
-            proxies: [...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
+            proxies: [...gz_JP, ...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
         },
         {
             name: "ChatGPT",
             type: "fallback",
-            proxies: [...TW, ...SG, ...JP, ...US, ...xs_US],
+            proxies: [...gz_JP, ...TW, ...SG, ...JP, ...US, ...xs_US],
         },
         {
             name: "X",
