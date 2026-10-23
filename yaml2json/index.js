@@ -6,8 +6,8 @@ import YAML from "yaml";
 
 function printUsage() {
   console.log(`Usage:
-  node index.js <input.yaml> [output.json]
-  node index.js - [output.json]
+  node index.js <input.yaml> [output.js]
+  node index.js - [output.js]
 
 Use "-" (or omit the input path) to read YAML from stdin.`);
 }
@@ -50,12 +50,12 @@ async function main() {
 
   const values = documents.map((document) => document.toJS());
   const result = values.length === 1 ? values[0] : values;
-  const json = `${JSON.stringify(result, null, 2)}\n`;
+  const javascript = `export default ${JSON.stringify(result, null, 2)};\n`;
 
   if (outputPath) {
-    await writeFile(outputPath, json, "utf8");
+    await writeFile(outputPath, javascript, "utf8");
   } else {
-    process.stdout.write(json);
+    process.stdout.write(javascript);
   }
 }
 

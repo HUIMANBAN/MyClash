@@ -10,6 +10,11 @@ const countryRegex = {
     UK: /🇬🇧|英国/i,
     DE: /🇩🇪|德国/i,
 };
+const ExternalNodeNames = {
+    E_JP: ["🇯🇵日本·三网|软银1", "🇯🇵日本·三网|软银2", "🇯🇵日本·三网|软银3", "🇯🇵日本·三网|软银4"],
+    E_EU: ["🇩🇪德国|法兰克福-1", "🇩🇪德国|法兰克福-2", "🇫🇷法国|巴黎世家-1", "🇫🇷法国|巴黎世家-2", "🇳🇱荷兰|阿姆斯特丹2"],
+    E_US: ["🇺🇸美·洛杉矶|专线-DS2", "🇺🇸美·盐湖城|专线-DS1", "🇺🇸美·盐湖城|专线-DS2", "🇺🇸美·凤凰城|专线-BP1", "🇺🇸美·凤凰城|专线-BP2", "🇺🇸美·凤凰城|专线-BP3", "🇺🇸美·凤凰城|专线-BP4", "🇺🇸美·凤凰城|专线-BP5", "🇺🇸美·凤凰城|专线-BP6",]
+}
 
 const countries = [...Object.keys(countryRegex), "Other"];
 const testURL = "https://www.gstatic.com/generate_204";
@@ -23,7 +28,7 @@ const main = function (config) {
 
     const nodes = classifyNodes(config.proxies);
 
-    config.proxies.push(...addNodes());
+    config.proxies.push(...addExternalNodes());
     // 创建代理组
     config["proxy-groups"] = createProxyGroups(nodes);
 
@@ -54,7 +59,8 @@ function classifyNodes(proxies) {
 
 function createProxyGroups(nodes) {
     const {All} = nodes;
-    const {HK, TW, JP, SG, US, UK, Other} = nodes.YL;
+    const {HK, TW, JP, SG, US} = nodes.YL;
+    const {E_US, E_EU, E_JP} = ExternalNodeNames
     const defaultGroup = {
         name: "Default",
         type: "select",
@@ -90,17 +96,17 @@ function createProxyGroups(nodes) {
         {
             name: "ChatGPT",
             type: "fallback",
-            proxies: [...TW, ...SG, ...JP, ...US],
+            proxies: [...TW, ...SG, ...JP, ...US, ...E_US,],
         },
         {
             name: "X",
             type: "fallback",
-            proxies: [...US, ...HK, ...JP, ...SG, ...TW],
+            proxies: [...US, ...E_US, ...HK, ...JP, ...SG, ...TW],
         },
         {
             name: "TikTok",
             type: "fallback",
-            proxies: [...US, ...TW, ...JP, ...SG, ...HK],
+            proxies: [...US, ...E_US, ...TW, ...JP, ...SG, ...HK],
         },
         {
             name: "Telegram",
@@ -110,7 +116,7 @@ function createProxyGroups(nodes) {
         {
             name: "BBC",
             type: "url-test",
-            proxies: ["🇩🇪德国|法兰克福-1", "🇩🇪德国|法兰克福-2", "🇫🇷法国|巴黎世家-1", "🇫🇷法国|巴黎世家-2", "🇳🇱荷兰|阿姆斯特丹2"],
+            proxies: [...E_EU, ...E_JP],
         },
         {
             name: "Github",
@@ -263,12 +269,330 @@ function getRules() {
     ];
 }
 
-function addNodes() {
+function addExternalNodes() {
     return [
-        { name: "🇯🇵日本·三网|软银1", type: "vless", server: "x-rb6.xueshan168.cc", port: 16000, uuid: "a7e4ca22-2d00-4528-be77-a3f7ec205d63", alterId: 0, cipher: "auto", udp: true, flow: "xtls-rprx-vision", encryption: "none", tls: true, "skip-cert-verify": false, servername: "s0.awsstatic.com", "reality-opts": { "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg", "short-id": null }, "client-fingerprint": "chrome", network: "tcp" },
-        { name: "🇯🇵日本·三网|软银2", type: "vless", server: "x-rb6.xueshan168.cc", port: 16000, uuid: "a7e4ca22-2d00-4528-be77-a3f7ec205d63", alterId: 0, cipher: "auto", udp: true, flow: "xtls-rprx-vision", encryption: "none", tls: true, "skip-cert-verify": false, servername: "s0.awsstatic.com", "reality-opts": { "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg", "short-id": null }, "client-fingerprint": "chrome", network: "tcp" },
-        { name: "🇯🇵日本·三网|软银3", type: "vless", server: "x-rb7.xueshan168.cc", port: 16000, uuid: "a7e4ca22-2d00-4528-be77-a3f7ec205d63", alterId: 0, cipher: "auto", udp: true, flow: "xtls-rprx-vision", encryption: "none", tls: true, "skip-cert-verify": false, servername: "s0.awsstatic.com", "reality-opts": { "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg", "short-id": null }, "client-fingerprint": "chrome", network: "tcp" },
-        { name: "🇯🇵日本·三网|软银4", type: "vless", server: "x-rb7.xueshan168.cc", port: 16000, uuid: "a7e4ca22-2d00-4528-be77-a3f7ec205d63", alterId: 0, cipher: "auto", udp: true, flow: "xtls-rprx-vision", encryption: "none", tls: true, "skip-cert-verify": false, servername: "s0.awsstatic.com", "reality-opts": { "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg", "short-id": null }, "client-fingerprint": "chrome", network: "tcp" },
+        {
+            "name": "🇯🇵日本·三网|软银1",
+            "type": "vless",
+            "server": "x-rb6.xueshan168.cc",
+            "port": 16000,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇯🇵日本·三网|软银2",
+            "type": "vless",
+            "server": "x-rb6.xueshan168.cc",
+            "port": 16000,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇯🇵日本·三网|软银3",
+            "type": "vless",
+            "server": "x-rb7.xueshan168.cc",
+            "port": 16000,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇯🇵日本·三网|软银4",
+            "type": "vless",
+            "server": "x-rb7.xueshan168.cc",
+            "port": 16000,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇩🇪德国|法兰克福-1",
+            "server": "x-dg.xueshan168.cc",
+            "port": 20601,
+            "sni": "x-dg.xueshan168.cc",
+            "up": 1000,
+            "down": 1000,
+            "skip-cert-verify": true,
+            "type": "hysteria2",
+            "password": "a7e4ca22-2d00-4528-be77-a3f7ec205d63"
+        },
+        {
+            "name": "🇩🇪德国|法兰克福-2",
+            "type": "vless",
+            "server": "x-dg.xueshan168.cc",
+            "port": 443,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "cMB0tAmD6scVvjRbLVm1IjryKtXM6SDtceLiz_qF6iw",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇫🇷法国|巴黎世家-1",
+            "server": "x-fg.xueshan168.cc",
+            "port": 20601,
+            "sni": "x-fg.xueshan168.cc",
+            "up": 1000,
+            "down": 1000,
+            "skip-cert-verify": true,
+            "type": "hysteria2",
+            "password": "a7e4ca22-2d00-4528-be77-a3f7ec205d63"
+        },
+        {
+            "name": "🇫🇷法国|巴黎世家-2",
+            "type": "vless",
+            "server": "x-fg.xueshan168.cc",
+            "port": 443,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "cMB0tAmD6scVvjRbLVm1IjryKtXM6SDtceLiz_qF6iw",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇳🇱荷兰|阿姆斯特丹2",
+            "type": "vless",
+            "server": "hl.xueshan168.cc",
+            "port": 443,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "cMB0tAmD6scVvjRbLVm1IjryKtXM6SDtceLiz_qF6iw",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇺🇸美·洛杉矶|专线-DS2",
+            "type": "vless",
+            "server": "x-mg.xueshan168.cc",
+            "port": 443,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇺🇸美·盐湖城|专线-DS1",
+            "server": "mg1.xueshan168.cc",
+            "port": 20601,
+            "sni": "mg1.xueshan168.cc",
+            "up": 5000,
+            "down": 5000,
+            "skip-cert-verify": true,
+            "type": "hysteria2",
+            "password": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "obfs": "salamander",
+            "obfs-password": "fmW0oAsJz1qFJ0Ez"
+        },
+        {
+            "name": "🇺🇸美·盐湖城|专线-DS2",
+            "type": "vless",
+            "server": "mg1.xueshan168.cc",
+            "port": 443,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "5UyrbL7pqfhh7vgpyk5beDFZUK2uQWLqdvfgJBzu7Gg",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇺🇸美·凤凰城|专线-BP1",
+            "server": "mg00.xueshan168.cc",
+            "port": 20601,
+            "sni": "mg00.xueshan168.cc",
+            "up": 5000,
+            "down": 5000,
+            "skip-cert-verify": true,
+            "type": "hysteria2",
+            "password": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "obfs": "salamander",
+            "obfs-password": "fmW0oAsJz1qFJ0Ez"
+        },
+        {
+            "name": "🇺🇸美·凤凰城|专线-BP2",
+            "type": "vless",
+            "server": "mg00.xueshan168.cc",
+            "port": 443,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "AKgKoK7kZCYcME_By_coqjGk-eWn6c4awdaqHYRak1o",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇺🇸美·凤凰城|专线-BP3",
+            "server": "mg-02.xueshan168.cc",
+            "port": 20601,
+            "sni": "mg-02.xueshan168.cc",
+            "up": 5000,
+            "down": 5000,
+            "skip-cert-verify": true,
+            "type": "hysteria2",
+            "password": "a7e4ca22-2d00-4528-be77-a3f7ec205d63"
+        },
+        {
+            "name": "🇺🇸美·凤凰城|专线-BP4",
+            "type": "vless",
+            "server": "mg-02.xueshan168.cc",
+            "port": 16000,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "kcrzX4u2aXAvpUUnrx1ATqMJ_-6byfTI9DSl4pSFDmU",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
+        {
+            "name": "🇺🇸美·凤凰城|专线-BP5",
+            "server": "mg03.xueshan168.cc",
+            "port": 20601,
+            "sni": "mg03.xueshan168.cc",
+            "up": 5000,
+            "down": 5000,
+            "skip-cert-verify": true,
+            "type": "hysteria2",
+            "password": "a7e4ca22-2d00-4528-be77-a3f7ec205d63"
+        },
+        {
+            "name": "🇺🇸美·凤凰城|专线-BP6",
+            "type": "vless",
+            "server": "mg03.xueshan168.cc",
+            "port": 16000,
+            "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63",
+            "alterId": 0,
+            "cipher": "auto",
+            "udp": true,
+            "flow": "xtls-rprx-vision",
+            "encryption": "none",
+            "tls": true,
+            "skip-cert-verify": false,
+            "servername": "s0.awsstatic.com",
+            "reality-opts": {
+                "public-key": "iv3BAoFjlsPSSjOn1cyXVZ3H31KqX65PoJusBEfU0lM",
+                "short-id": null
+            },
+            "client-fingerprint": "chrome",
+            "network": "tcp"
+        },
     ];
 }
 

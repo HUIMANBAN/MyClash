@@ -2,7 +2,7 @@
   "name": "yaml2json",
   "version": "1.0.0",
   "private": true,
-  "description": "Convert YAML files or stdin to JSON.",
+  "description": "Convert YAML files or stdin to a JavaScript object module.",
   "type": "module",
   "scripts": {
     "start": "node index.js"
