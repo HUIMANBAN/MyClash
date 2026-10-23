@@ -93,12 +93,12 @@ function createProxyGroups(nodes) {
         {
             name: "Google",
             type: "url-test",
-            proxies: [...US, ...TW, ...SG, ...JP],
+            proxies: [...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
         },
         {
             name: "Gemini",
             type: "fallback",
-            proxies: [...SG, ...US, ...TW, ...JP, ...xs_EU, ...xs_JP,],
+            proxies: [...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
         },
         {
             name: "ChatGPT",
