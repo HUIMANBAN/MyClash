@@ -73,7 +73,7 @@ function createProxyGroups(nodes) {
         type: "select",
         proxies: [
             "Auto",
-            ...gz_SG,
+
             ...countries.flatMap((country) => nodes.YL[country]),
             "DIRECT",
         ],
@@ -157,7 +157,7 @@ function createProxyGroups(nodes) {
         ...defaultGroup,
         proxies: defaultGroup.proxies.filter((name) =>
             name === "DIRECT" || validGroupNames.has(name) || validNodeNames.has(name)
-        ),
+        ).push(...gz_SG),
     };
 
     return [validDefaultGroup, ...validGroups];
