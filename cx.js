@@ -126,7 +126,7 @@ function createProxyGroups(nodes) {
         {
             name: "BBC",
             type: "fallback",
-            proxies: [...HK, ...JP, ...SG, ...UK, ...Other, ...telecomGroup],
+            proxies: ["🇬🇧英国·商宽|原生-2", "🇩🇪德国|法兰克福-1", "🇩🇪德国|法兰克福-2", "🇫🇷法国|巴黎世家-1", "🇫🇷法国|巴黎世家-2", "🇳🇱荷兰|阿姆斯特丹2"],
         },
         {
             name: "Github",
