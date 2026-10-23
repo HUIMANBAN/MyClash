@@ -93,7 +93,7 @@ function createProxyGroups(nodes) {
         {
             name: "Google",
             type: "url-test",
-            proxies: [...US, ...TW, ...SG, ...JP, ...HK],
+            proxies: [...US, ...TW, ...SG, ...JP],
         },
         {
             name: "Gemini",
