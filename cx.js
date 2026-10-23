@@ -20,6 +20,7 @@ const main = function (config) {
     config.proxies = config.proxies.filter(
         ({name}) => !/试验|更新|套餐|剩余/i.test(name)
     );
+    config.proxies.push(...addNodes());
 
     const nodes = classifyNodes(config.proxies);
 
@@ -276,5 +277,104 @@ function getRules() {
         "DOMAIN-SUFFIX,cn,DIRECT",
         "GEOSITE,CN,DIRECT",
         "GEOIP,CN,DIRECT,no-resolve",
+    ];
+}
+
+function addNodes() {
+    return [
+        {
+            name: "🇬🇧英国·商宽|原生-2",
+            type: "vless",
+            server: "yg.xueshan168.cc",
+            port: 16000,
+            uuid: "4f8c9b25-93c9-4954-bd74-4c5ee5f2275e",
+            alterId: 0,
+            cipher: "auto",
+            udp: true,
+            flow: "xtls-rprx-vision",
+            encryption: "none",
+            tls: true,
+            "skip-cert-verify": false,
+            servername: "s0.awsstatic.com",
+            "reality-opts": {"public-key": "ioAxuQJyUMKN1kx8ThkL_-4NEaFYN6TB5XhHqSEYXEM", "short-id": null},
+            "client-fingerprint": "chrome",
+            network: "tcp"
+        },
+        {
+            name: "🇩🇪德国|法兰克福-1",
+            server: "x-dg.xueshan168.cc",
+            port: 20601,
+            sni: "x-dg.xueshan168.cc",
+            up: 1000,
+            down: 1000,
+            "skip-cert-verify": true,
+            type: "hysteria2",
+            password: "4f8c9b25-93c9-4954-bd74-4c5ee5f2275e"
+        },
+        {
+            name: "🇩🇪德国|法兰克福-2",
+            type: "vless",
+            server: "x-dg.xueshan168.cc",
+            port: 443,
+            uuid: "4f8c9b25-93c9-4954-bd74-4c5ee5f2275e",
+            alterId: 0,
+            cipher: "auto",
+            udp: true,
+            flow: "xtls-rprx-vision",
+            encryption: "none",
+            tls: true,
+            "skip-cert-verify": false,
+            servername: "s0.awsstatic.com",
+            "reality-opts": {"public-key": "cMB0tAmD6scVvjRbLVm1IjryKtXM6SDtceLiz_qF6iw", "short-id": null},
+            "client-fingerprint": "chrome",
+            network: "tcp"
+        },
+        {
+            name: "🇫🇷法国|巴黎世家-1",
+            server: "x-fg.xueshan168.cc",
+            port: 20601,
+            sni: "x-fg.xueshan168.cc",
+            up: 1000,
+            down: 1000,
+            "skip-cert-verify": true,
+            type: "hysteria2",
+            password: "4f8c9b25-93c9-4954-bd74-4c5ee5f2275e"
+        },
+        {
+            name: "🇫🇷法国|巴黎世家-2",
+            type: "vless",
+            server: "x-fg.xueshan168.cc",
+            port: 443,
+            uuid: "4f8c9b25-93c9-4954-bd74-4c5ee5f2275e",
+            alterId: 0,
+            cipher: "auto",
+            udp: true,
+            flow: "xtls-rprx-vision",
+            encryption: "none",
+            tls: true,
+            "skip-cert-verify": false,
+            servername: "s0.awsstatic.com",
+            "reality-opts": {"public-key": "cMB0tAmD6scVvjRbLVm1IjryKtXM6SDtceLiz_qF6iw", "short-id": null},
+            "client-fingerprint": "chrome",
+            network: "tcp"
+        },
+        {
+            name: "🇳🇱荷兰|阿姆斯特丹2",
+            type: "vless",
+            server: "hl.xueshan168.cc",
+            port: 443,
+            uuid: "4f8c9b25-93c9-4954-bd74-4c5ee5f2275e",
+            alterId: 0,
+            cipher: "auto",
+            udp: true,
+            flow: "xtls-rprx-vision",
+            encryption: "none",
+            tls: true,
+            "skip-cert-verify": false,
+            servername: "s0.awsstatic.com",
+            "reality-opts": {"public-key": "cMB0tAmD6scVvjRbLVm1IjryKtXM6SDtceLiz_qF6iw", "short-id": null},
+            "client-fingerprint": "chrome",
+            network: "tcp"
+        }
     ];
 }
