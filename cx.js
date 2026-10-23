@@ -20,10 +20,10 @@ const main = function (config) {
     config.proxies = config.proxies.filter(
         ({name}) => !/试验|更新|套餐|剩余/i.test(name)
     );
-    config.proxies.push(...addNodes());
 
     const nodes = classifyNodes(config.proxies);
 
+    config.proxies.push(...addNodes());
     // 创建代理组
     config["proxy-groups"] = createProxyGroups(nodes);
 
