@@ -155,9 +155,9 @@ function createProxyGroups(nodes) {
 
     const validDefaultGroup = {
         ...defaultGroup,
-        proxies: defaultGroup.proxies.filter((name) =>
+        proxies: [...defaultGroup.proxies.filter((name) =>
             name === "DIRECT" || validGroupNames.has(name) || validNodeNames.has(name)
-        ).push(...gz_SG),
+        ), ...gz_SG],
     };
 
     return [validDefaultGroup, ...validGroups];
