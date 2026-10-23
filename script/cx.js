@@ -163,106 +163,6 @@ function createProxyGroups(nodes) {
     return [validDefaultGroup, ...validGroups];
 }
 
-function getRules() {
-    return [
-        // YouTube / 沉浸式翻译
-        "DOMAIN-SUFFIX,googlevideo.com,YouTube",
-        "DOMAIN-SUFFIX,ggpht.com,YouTube",
-        "DOMAIN-SUFFIX,ytimg.com,YouTube",
-        "DOMAIN-KEYWORD,youtube,YouTube",
-        "DOMAIN-SUFFIX,immersivetranslate.com,YouTube",
-
-        // AI
-        "DOMAIN-KEYWORD,chatgpt,ChatGPT",
-        "DOMAIN-KEYWORD,openai,ChatGPT",
-        "DOMAIN-SUFFIX,oaistatic.com,ChatGPT",
-        "DOMAIN-SUFFIX,oaiusercontent.com,ChatGPT",
-        "DOMAIN-SUFFIX,gemini.google.com,Gemini",
-        "DOMAIN-KEYWORD,gemini,Gemini",
-
-        // Google
-        "DOMAIN-SUFFIX,gstatic.com,Google",
-        "DOMAIN-KEYWORD,google,Google",
-
-        // 海外服务
-        "DOMAIN-KEYWORD,tiktok,TikTok",
-        "DOMAIN-SUFFIX,chinadigitaltimes.net,Google",
-        "DOMAIN-KEYWORD,github,Github",
-        "DOMAIN-SUFFIX,bbc.com,BBC",
-        "DOMAIN-SUFFIX,bbc.co.uk,BBC",
-        "DOMAIN-SUFFIX,x.com,X",
-        "DOMAIN-SUFFIX,twitter.com,X",
-        "DOMAIN-SUFFIX,twimg.com,X",
-        "DOMAIN-SUFFIX,t.co,X",
-
-        // Telegram
-        "DOMAIN-SUFFIX,telegram.org,Telegram",
-        "DOMAIN-SUFFIX,telegram.me,Telegram",
-        "DOMAIN-SUFFIX,t.me,Telegram",
-        "IP-CIDR,91.108.0.0/16,Telegram,no-resolve",
-        "IP-CIDR,109.239.140.0/24,Telegram,no-resolve",
-        "IP-CIDR,149.154.160.0/20,Telegram,no-resolve",
-        "IP-CIDR6,2001:67c:4e8::/48,Telegram,no-resolve",
-        "IP-CIDR6,2001:b28:f23d::/48,Telegram,no-resolve",
-        "IP-CIDR6,2001:b28:f23f::/48,Telegram,no-resolve",
-
-        // Adobe
-        "DOMAIN-SUFFIX,adobe.com,REJECT",
-        "DOMAIN-SUFFIX,adobe.io,REJECT",
-        "DOMAIN-SUFFIX,adobestats.io,REJECT",
-
-        // 国内直连
-        "DOMAIN-SUFFIX,acfun.tv,DIRECT",
-        "DOMAIN-SUFFIX,aliapp.org,DIRECT",
-        "DOMAIN-KEYWORD,alicdn,DIRECT",
-        "DOMAIN-KEYWORD,alipay,DIRECT",
-        "DOMAIN-SUFFIX,amap.com,DIRECT",
-        "DOMAIN-SUFFIX,apple.com,DIRECT",
-        "DOMAIN-SUFFIX,baidu.com,DIRECT",
-        "DOMAIN-SUFFIX,biligame.com,DIRECT",
-        "DOMAIN-KEYWORD,bilibili,DIRECT",
-        "DOMAIN-SUFFIX,bing.com,DIRECT",
-        "DOMAIN-SUFFIX,douban.com,DIRECT",
-        "DOMAIN-SUFFIX,douyin.com,DIRECT",
-        "DOMAIN-SUFFIX,epubit.com,DIRECT",
-        "DOMAIN-SUFFIX,jd.com,DIRECT",
-        "DOMAIN-SUFFIX,kimi.com,DIRECT",
-        "DOMAIN-SUFFIX,mi.com,DIRECT",
-        "DOMAIN-SUFFIX,miui.com,DIRECT",
-        "DOMAIN-SUFFIX,msn.com,DIRECT",
-        "DOMAIN-SUFFIX,netease.com,DIRECT",
-        "DOMAIN-SUFFIX,qq.com,DIRECT",
-        "DOMAIN-SUFFIX,qianwen.com,DIRECT",
-        "DOMAIN-SUFFIX,360.com,DIRECT",
-        "DOMAIN-SUFFIX,sogou.com,DIRECT",
-        "DOMAIN-SUFFIX,sohu.com,DIRECT",
-        "DOMAIN-SUFFIX,taobao.com,DIRECT",
-        "DOMAIN-SUFFIX,tencent.com,DIRECT",
-        "DOMAIN-SUFFIX,weibo.com,DIRECT",
-        "DOMAIN-SUFFIX,weixin.com,DIRECT",
-        "DOMAIN-SUFFIX,xunlei.com,DIRECT",
-        "DOMAIN-SUFFIX,youdao.com,DIRECT",
-        "DOMAIN-SUFFIX,youku.com,DIRECT",
-        "DOMAIN-SUFFIX,zhihu.com,DIRECT",
-
-        // 局域网 / 特殊地址
-        "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
-        "IP-CIDR,10.0.0.0/8,DIRECT,no-resolve",
-        "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve",
-        "IP-CIDR,224.0.0.0/4,DIRECT,no-resolve",
-        "IP-CIDR6,::1/128,DIRECT,no-resolve",
-        "IP-CIDR6,fc00::/7,DIRECT,no-resolve",
-        "IP-CIDR6,fe80::/10,DIRECT,no-resolve",
-        "DOMAIN-SUFFIX,local,DIRECT",
-        "GEOIP,LAN,DIRECT,no-resolve",
-
-        // 中国流量
-        "DOMAIN-SUFFIX,cn,DIRECT",
-        "GEOSITE,CN,DIRECT",
-        "GEOIP,CN,DIRECT,no-resolve",
-    ];
-}
-
 function addExternalNodes() {
     return [
         //xueshan
@@ -297,4 +197,139 @@ function addExternalNodes() {
         {"name": "🇯🇵日本-06", "server": "jpyh.xn--9kqp42aims.top", "port": 20000, "ports": "20000-55000", "mport": "20000-55000", "udp": true, "skip-cert-verify": true, "sni": "gw.alicdn.com", "type": "hysteria2", "password": "6a67bb79-050a-4e26-a37b-7fd54a29e27e", "obfs": "salamander", "obfs-password": "OTA7ZjRiOGQ5MWYxNmQyZA=="},
     ];
 }
+
+function getRules() {
+    return [
+        // YouTube / 沉浸式翻译
+        "DOMAIN-SUFFIX,googlevideo.com,YouTube",
+        "DOMAIN-SUFFIX,ggpht.com,YouTube",
+        "DOMAIN-SUFFIX,ytimg.com,YouTube",
+        "DOMAIN-KEYWORD,youtube,YouTube",
+        "DOMAIN-SUFFIX,immersivetranslate.com,YouTube",
+
+        // AI
+        "DOMAIN-KEYWORD,chatgpt,ChatGPT",
+        "DOMAIN-KEYWORD,openai,ChatGPT",
+        "DOMAIN-SUFFIX,oaistatic.com,ChatGPT",
+        "DOMAIN-SUFFIX,oaiusercontent.com,ChatGPT",
+        "DOMAIN-SUFFIX,gemini.google.com,Gemini",
+        "DOMAIN-KEYWORD,gemini,Gemini",
+
+        // Google
+        "DOMAIN-SUFFIX,services.googleapis.cn,Google",
+        "DOMAIN-SUFFIX,gstatic.com,Google",
+        "DOMAIN-KEYWORD,google,Google",
+        "DOMAIN-KEYWORD,gmail,Google",
+
+        // 海外服务
+        "DOMAIN-KEYWORD,tiktok,TikTok",
+        "DOMAIN-SUFFIX,chinadigitaltimes.net,Google",
+        "DOMAIN-KEYWORD,github,Github",
+        "DOMAIN-SUFFIX,bbc.com,BBC",
+        "DOMAIN-SUFFIX,bbc.co.uk,BBC",
+        "DOMAIN-SUFFIX,x.com,X",
+        "DOMAIN-SUFFIX,twitter.com,X",
+        "DOMAIN-SUFFIX,twimg.com,X",
+        "DOMAIN-SUFFIX,t.co,X",
+
+        // Telegram
+        "DOMAIN-SUFFIX,telegram.org,Telegram",
+        "DOMAIN-SUFFIX,telegram.me,Telegram",
+        "DOMAIN-SUFFIX,t.me,Telegram",
+        "IP-CIDR,91.108.0.0/16,Telegram,no-resolve",
+        "IP-CIDR,109.239.140.0/24,Telegram,no-resolve",
+        "IP-CIDR,149.154.160.0/20,Telegram,no-resolve",
+        "IP-CIDR6,2001:67c:4e8::/48,Telegram,no-resolve",
+        "IP-CIDR6,2001:b28:f23d::/48,Telegram,no-resolve",
+        "IP-CIDR6,2001:b28:f23f::/48,Telegram,no-resolve",
+
+        //Google 中国服务相关 IP
+        "IP-CIDR,120.232.181.162/32,Google,no-resolve",
+        "IP-CIDR,120.241.147.226/32,Google,no-resolve",
+        "IP-CIDR,120.253.253.226/32,Google,no-resolve",
+        "IP-CIDR,120.253.255.162/32,Google,no-resolve",
+        "IP-CIDR,120.253.255.34/32,Google,no-resolve",
+        "IP-CIDR,120.253.255.98/32,Google,no-resolve",
+        "IP-CIDR,180.163.150.162/32,Google,no-resolve",
+        "IP-CIDR,180.163.150.34/32,Google,no-resolve",
+        "IP-CIDR,180.163.151.162/32,Google,no-resolve",
+        "IP-CIDR,180.163.151.34/32,Google,no-resolve",
+        "IP-CIDR,203.208.39.0/24,Google,no-resolve",
+        "IP-CIDR,203.208.40.0/24,Google,no-resolve",
+        "IP-CIDR,203.208.41.0/24,Google,no-resolve",
+        "IP-CIDR,203.208.43.0/24,Google,no-resolve",
+        "IP-CIDR,203.208.50.0/24,Google,no-resolve",
+        "IP-CIDR,220.181.174.162/32,Google,no-resolve",
+        "IP-CIDR,220.181.174.226/32,Google,no-resolve",
+        "IP-CIDR,220.181.174.34/32,Google,no-resolve",
+
+        // Adobe
+        "DOMAIN-SUFFIX,adobe.com,REJECT",
+        "DOMAIN-SUFFIX,adobe.io,REJECT",
+        "DOMAIN-SUFFIX,adobestats.io,REJECT",
+
+        // 国内直连
+        "DOMAIN-SUFFIX,acfun.tv,DIRECT",
+        "DOMAIN-SUFFIX,aliapp.org,DIRECT",
+        "DOMAIN-KEYWORD,alicdn,DIRECT",
+        "DOMAIN-KEYWORD,alipay,DIRECT",
+        "DOMAIN-SUFFIX,amap.com,DIRECT",
+        "DOMAIN-SUFFIX,apple.com,DIRECT",
+        "DOMAIN-KEYWORD,baidu,DIRECT",
+        "DOMAIN-SUFFIX,baidu.com,DIRECT",
+        "DOMAIN-SUFFIX,biligame.com,DIRECT",
+        "DOMAIN-KEYWORD,bilibili,DIRECT",
+        "DOMAIN-SUFFIX,bing.com,DIRECT",
+        "DOMAIN-SUFFIX,douban.com,DIRECT",
+        "DOMAIN-SUFFIX,douyin.com,DIRECT",
+        "DOMAIN-SUFFIX,epubit.com,DIRECT",
+        "DOMAIN-SUFFIX,jd.com,DIRECT",
+        "DOMAIN-SUFFIX,kimi.com,DIRECT",
+        "DOMAIN-SUFFIX,mi.com,DIRECT",
+        "DOMAIN-SUFFIX,miui.com,DIRECT",
+        'DOMAIN-SUFFIX,tmall.com,DIRECT',
+        'DOMAIN-SUFFIX,miwifi.com,DIRECT',
+        'DOMAIN-SUFFIX,sohu.com,DIRECT',
+        "DOMAIN-SUFFIX,msn.com,DIRECT",
+        "DOMAIN-SUFFIX,netease.com,DIRECT",
+        "DOMAIN-SUFFIX,qq.com,DIRECT",
+        'DOMAIN-SUFFIX,jianshu.com,DIRECT',
+        'DOMAIN-SUFFIX,iqiyi.com,DIRECT',
+        "DOMAIN-SUFFIX,qianwen.com,DIRECT",
+        "DOMAIN-SUFFIX,360.com,DIRECT",
+        "DOMAIN-SUFFIX,sogou.com,DIRECT",
+        "DOMAIN-SUFFIX,sohu.com,DIRECT",
+        "DOMAIN-SUFFIX,taobao.com,DIRECT",
+        "DOMAIN-SUFFIX,tencent.com,DIRECT",
+        "DOMAIN-SUFFIX,weibo.com,DIRECT",
+        "DOMAIN-SUFFIX,weixin.com,DIRECT",
+        "DOMAIN-SUFFIX,xunlei.com,DIRECT",
+        "DOMAIN-SUFFIX,youdao.com,DIRECT",
+        "DOMAIN-SUFFIX,youku.com,DIRECT",
+        "DOMAIN-SUFFIX,zhihu.com,DIRECT",
+        "DOMAIN-SUFFIX,126.com,DIRECT",
+        "DOMAIN-SUFFIX,126.net,DIRECT",
+        "DOMAIN-SUFFIX,127.net,DIRECT",
+        "DOMAIN-SUFFIX,163.com,DIRECT",
+
+
+        // 局域网 / 特殊地址
+        "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
+        "IP-CIDR,10.0.0.0/8,DIRECT,no-resolve",
+        "IP-CIDR,172.16.0.0/12,DIRECT,no-resolve",
+        "IP-CIDR,224.0.0.0/4,DIRECT,no-resolve",
+        "IP-CIDR6,::1/128,DIRECT,no-resolve",
+        "IP-CIDR6,fc00::/7,DIRECT,no-resolve",
+        "IP-CIDR6,fe80::/10,DIRECT,no-resolve",
+        "DOMAIN-SUFFIX,local,DIRECT",
+        "GEOIP,LAN,DIRECT,no-resolve",
+
+        // 中国流量
+        "DOMAIN-SUFFIX,cn,DIRECT",
+        "GEOSITE,CN,DIRECT",
+        "GEOIP,CN,DIRECT,no-resolve",
+    ];
+}
+
+
 
