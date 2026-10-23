@@ -18,7 +18,7 @@ const testURL = "https://www.gstatic.com/generate_204";
 const main = function (config) {
     // 删除不需要的节点
     config.proxies = config.proxies.filter(
-        ({name}) => !/试验|更新|套餐|剩余/i.test(name)
+        ({name}) => !/试验|更新|套餐|剩余|电信/i.test(name)
     );
 
     const nodes = classifyNodes(config.proxies);
@@ -37,15 +37,9 @@ function classifyNodes(proxies) {
     const nodes = {
         All: proxies.map(({name}) => name),
         YL: Object.fromEntries(countries.map((country) => [country, []])),
-        DX: [],
     };
 
     for (const {name} of proxies) {
-        if (/电信/i.test(name)) {
-            nodes.DX.push(name);
-            continue;
-        }
-
         if (!/移联/i.test(name)) continue;
 
         const country = countries.find(
@@ -59,24 +53,14 @@ function classifyNodes(proxies) {
 }
 
 function createProxyGroups(nodes) {
-    const {All, DX} = nodes;
+    const {All} = nodes;
     const {HK, TW, JP, SG, US, UK, Other} = nodes.YL;
-    const telecomName = "Telecom";
-    const telecomGroup = DX.length > 0 ? [telecomName] : [];
-
-    const dxGroup = {
-        name: telecomName,
-        type: "fallback",
-        proxies: DX,
-    };
-
     const defaultGroup = {
         name: "Default",
         type: "select",
         proxies: [
             "Auto",
             ...countries.flatMap((country) => nodes.YL[country]),
-            telecomName,
             "DIRECT",
         ],
     };
@@ -91,37 +75,37 @@ function createProxyGroups(nodes) {
         {
             name: "YouTube",
             type: "url-test",
-            proxies: [...TW, ...SG, ...JP, ...HK, ...US, ...telecomGroup],
+            proxies: [...TW, ...SG, ...JP, ...HK, ...US],
         },
         {
             name: "Google",
             type: "url-test",
-            proxies: [...US, ...TW, ...SG, ...JP, ...HK, ...telecomGroup],
+            proxies: [...US, ...TW, ...SG, ...JP, ...HK],
         },
         {
             name: "Gemini",
             type: "fallback",
-            proxies: [...SG, ...US, ...HK, ...TW, ...JP, ...telecomGroup],
+            proxies: [...SG, ...US, ...HK, ...TW, ...JP],
         },
         {
             name: "ChatGPT",
             type: "fallback",
-            proxies: [...TW, ...SG, ...JP, ...US, ...telecomGroup],
+            proxies: [...TW, ...SG, ...JP, ...US],
         },
         {
             name: "X",
             type: "fallback",
-            proxies: [...US, ...HK, ...JP, ...SG, ...TW, ...telecomGroup],
+            proxies: [...US, ...HK, ...JP, ...SG, ...TW],
         },
         {
             name: "TikTok",
             type: "fallback",
-            proxies: [...US, ...TW, ...JP, ...SG, ...HK, ...telecomGroup],
+            proxies: [...US, ...TW, ...JP, ...SG, ...HK],
         },
         {
             name: "Telegram",
             type: "url-test",
-            proxies: [...SG, ...JP, ...TW, ...US, ...HK, ...telecomGroup],
+            proxies: [...SG, ...JP, ...TW, ...US, ...HK],
         },
         {
             name: "BBC",
@@ -131,7 +115,7 @@ function createProxyGroups(nodes) {
         {
             name: "Github",
             type: "fallback",
-            proxies: [...HK, ...SG, ...JP, ...TW, ...telecomGroup],
+            proxies: [...HK, ...SG, ...JP, ...TW],
         },
     ].map((group) => ({
         ...group,
@@ -160,7 +144,6 @@ function createProxyGroups(nodes) {
     const allGroups = [
         autoGroup,
         ...serviceGroups,
-        dxGroup,
     ];
 
     const validGroups = allGroups
