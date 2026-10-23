@@ -101,12 +101,12 @@ function createProxyGroups(nodes) {
         {
             name: "X",
             type: "fallback",
-            proxies: [...US, ...E_US, ...HK, ...JP, ...SG, ...TW],
+            proxies: [...E_US, ...US, ...HK, ...JP, ...SG, ...TW],
         },
         {
             name: "TikTok",
             type: "fallback",
-            proxies: [...US, ...E_US, ...TW, ...JP, ...SG, ...HK],
+            proxies: [...E_US, ...US, ...TW, ...JP, ...SG, ...HK],
         },
         {
             name: "Telegram",
