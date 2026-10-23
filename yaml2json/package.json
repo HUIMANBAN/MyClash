@@ -1,0 +1,13 @@
+{
+  "name": "yaml2json",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Convert YAML files or stdin to JSON.",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "yaml": "^2.8.1"
+  }
+}

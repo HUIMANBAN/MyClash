@@ -1,2 +1,7 @@
 .idea/
 temp/
+yaml2json/*
+!yaml2json/index.js
+!yaml2json/package.json
+!yaml2json/package-lock.json
+!yaml2json/README.md
