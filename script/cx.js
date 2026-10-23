@@ -73,6 +73,7 @@ function createProxyGroups(nodes) {
         type: "select",
         proxies: [
             "Auto",
+            ...gz_SG,
             ...countries.flatMap((country) => nodes.YL[country]),
             "DIRECT",
         ],
@@ -92,7 +93,7 @@ function createProxyGroups(nodes) {
         },
         {
             name: "Google",
-            type: "url-test",
+            type: "fallback",
             proxies: [...gz_SG, ...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
         },
         {
