@@ -9,6 +9,7 @@ const countryRegex = {
     US: /🇺🇸|美国/i,
     UK: /🇬🇧|英国/i,
     DE: /🇩🇪|德国/i,
+  
 };
 const xsNodeNames = {
     xs_JP: ["🇯🇵日本·三网|软银1", "🇯🇵日本·三网|软银2", "🇯🇵日本·三网|软银3", "🇯🇵日本·三网|软银4"],
