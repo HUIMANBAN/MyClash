@@ -17,7 +17,6 @@ const xsNodeNames = {
 };
 
 const gzNodeNames = {
-    gz_SG: ["🇸🇬新加坡-限免01"],
     gz_KR: ["🇰🇷韩国-01 | 家宽", "🇰🇷韩国-02 | 家宽"],
     gz_DE: ["🇩🇪德国-01", "🇩🇪德国-02"],
     gz_JP: ["🇯🇵日本-03", "🇯🇵日本-04", "🇯🇵日本-05", "🇯🇵日本-06"],
@@ -67,7 +66,7 @@ function createProxyGroups(nodes) {
     const {All} = nodes;
     const {HK, TW, JP, SG, US} = nodes.YL;
     const {xs_US, xs_EU, xs_JP} = xsNodeNames;
-    const {gz_SG, gz_KR, gz_JP, gz_DE} = gzNodeNames
+    const {gz_KR, gz_JP, gz_DE} = gzNodeNames
     const defaultGroup = {
         name: "Default",
         type: "select",
@@ -94,17 +93,17 @@ function createProxyGroups(nodes) {
         {
             name: "Google",
             type: "fallback",
-            proxies: [...gz_SG, ...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
+            proxies: [ ...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
         },
         {
             name: "Gemini",
             type: "fallback",
-            proxies: [...gz_SG, ...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
+            proxies: [ ...SG, ...TW, ...JP, ...US, ...xs_EU, ...xs_JP,],
         },
         {
             name: "ChatGPT",
             type: "fallback",
-            proxies: [...gz_SG, ...TW, ...SG, ...JP, ...US, ...xs_US],
+            proxies: [ ...TW, ...SG, ...JP, ...US, ...xs_US],
         },
         {
             name: "X",
@@ -119,17 +118,17 @@ function createProxyGroups(nodes) {
         {
             name: "Telegram",
             type: "url-test",
-            proxies: [...gz_SG, ...gz_JP, ...gz_KR, ...gz_DE, ...SG, ...JP, ...TW, ...US, ...HK],
+            proxies: [ ...gz_JP, ...gz_KR, ...gz_DE, ...SG, ...JP, ...TW, ...US, ...HK],
         },
         {
             name: "BBC",
             type: "url-test",
-            proxies: [...xs_EU, ...xs_JP, ...gz_SG, ...gz_JP, ...gz_KR, ...gz_DE,],
+            proxies: [...xs_EU, ...xs_JP,  ...gz_JP, ...gz_KR, ...gz_DE,],
         },
         {
             name: "Github",
             type: "fallback",
-            proxies: [...gz_SG, ...gz_JP, ...gz_KR, ...gz_DE, ...HK, ...SG, ...JP, ...TW],
+            proxies: [ ...gz_JP, ...gz_KR, ...gz_DE, ...HK, ...SG, ...JP, ...TW],
         },
     ].map((group) => ({
         ...group,
@@ -157,7 +156,7 @@ function createProxyGroups(nodes) {
         ...defaultGroup,
         proxies: [...defaultGroup.proxies.filter((name) =>
             name === "DIRECT" || validGroupNames.has(name) || validNodeNames.has(name)
-        ), ...gz_SG],
+        ), ],
     };
 
     return [validDefaultGroup, ...validGroups];
@@ -186,7 +185,6 @@ function addExternalNodes() {
         {"name": "🇺🇸美·凤凰城|专线-BP6", "type": "vless", "server": "mg03.xueshan168.cc", "port": 16000, "uuid": "a7e4ca22-2d00-4528-be77-a3f7ec205d63", "alterId": 0, "cipher": "auto", "udp": true, "flow": "xtls-rprx-vision", "encryption": "none", "tls": true, "skip-cert-verify": false, "servername": "s0.awsstatic.com", "reality-opts": {"public-key": "iv3BAoFjlsPSSjOn1cyXVZ3H31KqX65PoJusBEfU0lM", "short-id": null}, "client-fingerprint": "chrome", "network": "tcp"},
 
         //gouzi
-        {"name": "🇸🇬新加坡-限免01", "server": "sg-gcp.xn--9kqp42aims.top", "port": 20000, "ports": "20000-55000", "mport": "20000-55000", "udp": true, "skip-cert-verify": false, "sni": "sg-gcp.xn--9kqp42aims.top", "type": "hysteria2", "password": "6a67bb79-050a-4e26-a37b-7fd54a29e27e", "obfs": "salamander", "obfs-password": "OTA2ZjRiOGQ5MWYxNmQyZA=="},
         {"name": "🇰🇷韩国-01 | 家宽", "server": "kr-01.xn--9kqp42aims.top", "port": 65503, "udp": true, "skip-cert-verify": false, "sni": "kr-01.xn--9kqp42aims.top", "type": "hysteria2", "password": "6a67bb79-050a-4e26-a37b-7fd54a29e27e", "obfs": "salamander", "obfs-password": "OTA2ZjRiOGQ5MWYxNmQyZA=="},
         {"name": "🇰🇷韩国-02 | 家宽", "server": "kr-01.xn--9kqp42aims.top", "port": 65503, "udp": true, "skip-cert-verify": false, "sni": "kr-01.xn--9kqp42aims.top", "type": "hysteria2", "password": "6a67bb79-050a-4e26-a37b-7fd54a29e27e", "obfs": "salamander", "obfs-password": "OTA2ZjRiOGQ5MWYxNmQyZA=="},
         {"name": "🇩🇪德国-01", "type": "vless", "server": "de-01.xn--9kqp42aims.top", "port": 443, "uuid": "6a67bb79-050a-4e26-a37b-7fd54a29e27e", "udp": true, "flow": "xtls-rprx-vision", "tls": true, "skip-cert-verify": false, "client-fingerprint": "ios", "servername": "osxapps.itunes.apple.com", "reality-opts": {"public-key": "fyEP9fBnjiwjwBhzkqPvP9J8pwaOh_qK2hs_ddv7M14", "short-id": "99dd20b2", "support-x25519mlkem768": true}},
@@ -311,8 +309,7 @@ function getRules() {
         "DOMAIN-SUFFIX,126.net,DIRECT",
         "DOMAIN-SUFFIX,127.net,DIRECT",
         "DOMAIN-SUFFIX,163.com,DIRECT",
-
-
+        
         // 局域网 / 特殊地址
         'IP-CIDR,127.0.0.0/8,DIRECT',
         "IP-CIDR,192.168.0.0/16,DIRECT,no-resolve",
